@@ -2,11 +2,13 @@ package internal
 
 import (
 	"container/heap"
+	"sync"
 )
 
 type PriorityQueue[T any] struct {
 	queue []T
 	less  func(i, j T) bool
+	mutex *sync.Mutex
 }
 
 func (pq PriorityQueue[T]) Len() int {
@@ -18,6 +20,9 @@ func (pq PriorityQueue[T]) Less(i, j int) bool {
 }
 
 func (pq *PriorityQueue[T]) Pop() any {
+	pq.mutex.Lock()
+	defer pq.mutex.Unlock()
+
 	if pq.Len() == 0 {
 		return nil
 	}
@@ -31,10 +36,17 @@ func (pq *PriorityQueue[T]) Pop() any {
 
 func (pq *PriorityQueue[T]) Push(item any) {
 	_item := item.(T)
+
+	pq.mutex.Lock()
+	defer pq.mutex.Unlock()
+
 	pq.queue = append(pq.queue, _item)
 }
 
 func (pq *PriorityQueue[T]) Swap(i, j int) {
+	pq.mutex.Lock()
+	defer pq.mutex.Unlock()
+
 	if i >= pq.Len() || j >= pq.Len() {
 		return
 	}
@@ -45,6 +57,7 @@ func NewPriorityQueue[T any](less func(i, j T) bool) PriorityQueue[T] {
 	pq := PriorityQueue[T]{
 		queue: make([]T, 0),
 		less:  less,
+		mutex: &sync.Mutex{},
 	}
 
 	heap.Init(&pq)
