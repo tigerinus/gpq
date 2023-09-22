@@ -6,6 +6,7 @@ import (
 	"github.com/tigerinus/gpq"
 )
 
+// This is an example struct that is irrelevant to gpq
 type Expirable[T any] struct {
 	Data           T
 	ExpirationTime int64
