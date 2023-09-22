@@ -1,4 +1,4 @@
-package gpq
+package internal
 
 import (
 	"container/heap"

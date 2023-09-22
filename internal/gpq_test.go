@@ -1,10 +1,10 @@
-package gpq_test
+package internal_test
 
 import (
 	"container/heap"
 	"testing"
 
-	"github.com/tigerinus/gpq"
+	"github.com/tigerinus/gpq/internal"
 )
 
 type Expirable[T any] struct {
@@ -13,7 +13,7 @@ type Expirable[T any] struct {
 }
 
 func TestPriorityQueue(t *testing.T) {
-	pq := gpq.NewPriorityQueue[Expirable[string]](func(i, j *Expirable[string]) bool {
+	pq := internal.NewPriorityQueue[Expirable[string]](func(i, j *Expirable[string]) bool {
 		return i.ExpirationTime > j.ExpirationTime
 	})
 
