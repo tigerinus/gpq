@@ -13,7 +13,7 @@ type Expirable[T any] struct {
 }
 
 func TestPriorityQueue(t *testing.T) {
-	pq := internal.NewPriorityQueue[Expirable[string]](func(i, j *Expirable[string]) bool {
+	pq := internal.NewPriorityQueue[*Expirable[string]](func(i, j *Expirable[string]) bool {
 		return i.ExpirationTime > j.ExpirationTime
 	})
 
@@ -32,9 +32,9 @@ func TestPriorityQueue(t *testing.T) {
 		ExpirationTime: 3,
 	}
 
-	heap.Push(&pq, e2)
-	heap.Push(&pq, e1)
-	heap.Push(&pq, e3)
+	heap.Push(&pq, &e2)
+	heap.Push(&pq, &e1)
+	heap.Push(&pq, &e3)
 
 	for i := 3; i > 0; i-- {
 		if i != pq.Len() {

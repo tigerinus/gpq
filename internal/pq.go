@@ -5,8 +5,8 @@ import (
 )
 
 type PriorityQueue[T any] struct {
-	queue []*T
-	less  func(i, j *T) bool
+	queue []T
+	less  func(i, j T) bool
 }
 
 func (pq PriorityQueue[T]) Len() int {
@@ -31,7 +31,7 @@ func (pq *PriorityQueue[T]) Pop() any {
 
 func (pq *PriorityQueue[T]) Push(item any) {
 	_item := item.(T)
-	pq.queue = append(pq.queue, &_item)
+	pq.queue = append(pq.queue, _item)
 }
 
 func (pq *PriorityQueue[T]) Swap(i, j int) {
@@ -41,9 +41,9 @@ func (pq *PriorityQueue[T]) Swap(i, j int) {
 	(pq.queue)[i], (pq.queue)[j] = (pq.queue)[j], (pq.queue)[i]
 }
 
-func NewPriorityQueue[T any](less func(i, j *T) bool) PriorityQueue[T] {
+func NewPriorityQueue[T any](less func(i, j T) bool) PriorityQueue[T] {
 	pq := PriorityQueue[T]{
-		queue: make([]*T, 0),
+		queue: make([]T, 0),
 		less:  less,
 	}
 
