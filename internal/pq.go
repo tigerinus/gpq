@@ -15,6 +15,14 @@ func (pq PriorityQueue[T]) Len() int {
 	return len(pq.queue)
 }
 
+func (pq PriorityQueue[T]) Peek() any {
+	if pq.Len() == 0 {
+		return nil
+	}
+
+	return (pq.queue)[0]
+}
+
 func (pq PriorityQueue[T]) Less(i, j int) bool {
 	return pq.less((pq.queue)[i], (pq.queue)[j])
 }

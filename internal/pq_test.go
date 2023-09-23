@@ -33,8 +33,55 @@ func TestPriorityQueue(t *testing.T) {
 	}
 
 	heap.Push(&pq, &e2)
+	{
+		item := pq.Peek()
+		e, ok := item.(*Expirable[string])
+		if !ok {
+			t.Fail()
+		}
+
+		if e.Data != e2.Data {
+			t.Fail()
+		}
+
+		if e.ExpirationTime != e2.ExpirationTime {
+			t.Fail()
+		}
+	}
+
 	heap.Push(&pq, &e1)
+	{
+		item := pq.Peek()
+		e, ok := item.(*Expirable[string])
+		if !ok {
+			t.Fail()
+		}
+
+		if e.Data != e2.Data {
+			t.Fail()
+		}
+
+		if e.ExpirationTime != e2.ExpirationTime {
+			t.Fail()
+		}
+	}
+
 	heap.Push(&pq, &e3)
+	{
+		item := pq.Peek()
+		e, ok := item.(*Expirable[string])
+		if !ok {
+			t.Fail()
+		}
+
+		if e.Data != e3.Data {
+			t.Fail()
+		}
+
+		if e.ExpirationTime != e3.ExpirationTime {
+			t.Fail()
+		}
+	}
 
 	for i := 3; i > 0; i-- {
 		if i != pq.Len() {

@@ -40,8 +40,40 @@ func TestPriorityQueue(t *testing.T) {
     }
 
     pq.Push(&e2)
+    {
+        e := pq.Peek()
+        if e.Data != e2.Data {
+            t.Fail()
+        }
+
+        if e.ExpirationTime != e2.ExpirationTime {
+            t.Fail()
+        }
+    }
+
     pq.Push(&e1)
+    {
+        e := pq.Peek()
+        if e.Data != e2.Data {
+            t.Fail()
+        }
+
+        if e.ExpirationTime != e2.ExpirationTime {
+            t.Fail()
+        }
+    }
+
     pq.Push(&e3)
+    {
+        e := pq.Peek()
+        if e.Data != e3.Data {
+            t.Fail()
+        }
+
+        if e.ExpirationTime != e3.ExpirationTime {
+            t.Fail()
+        }
+    }
 
     for i := 3; i > 0; i-- {
         if i != pq.Len() {
@@ -55,4 +87,5 @@ func TestPriorityQueue(t *testing.T) {
         }
     }
 }
+
 ```
