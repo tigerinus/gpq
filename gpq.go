@@ -14,6 +14,11 @@ func (pq PriorityQueue[T]) Len() int {
 	return pq.ipq.Len()
 }
 
+func (pq PriorityQueue[T]) Peek() T {
+	item := pq.ipq.Peek()
+	return item.(T)
+}
+
 func (pq *PriorityQueue[T]) Push(item T) {
 	heap.Push(&pq.ipq, item)
 }
