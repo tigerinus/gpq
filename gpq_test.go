@@ -12,8 +12,8 @@ type Expirable[T any] struct {
 	ExpirationTime int64
 }
 
-func TestPriorityQueue(t *testing.T) {
-	pq := gpq.NewPriorityQueue[*Expirable[string]](func(i, j *Expirable[string]) bool {
+func TestPositive1(t *testing.T) {
+	pq := gpq.NewPriorityQueue[Expirable[string]](func(i, j Expirable[string]) bool {
 		return i.ExpirationTime > j.ExpirationTime
 	})
 
@@ -32,7 +32,7 @@ func TestPriorityQueue(t *testing.T) {
 		ExpirationTime: 3,
 	}
 
-	pq.Push(&e2)
+	pq.Push(e2)
 	{
 		e := pq.Peek()
 		if e.Data != e2.Data {
@@ -44,7 +44,7 @@ func TestPriorityQueue(t *testing.T) {
 		}
 	}
 
-	pq.Push(&e1)
+	pq.Push(e1)
 	{
 		e := pq.Peek()
 		if e.Data != e2.Data {
@@ -56,7 +56,7 @@ func TestPriorityQueue(t *testing.T) {
 		}
 	}
 
-	pq.Push(&e3)
+	pq.Push(e3)
 	{
 		e := pq.Peek()
 		if e.Data != e3.Data {
@@ -78,5 +78,22 @@ func TestPriorityQueue(t *testing.T) {
 		if e.ExpirationTime != int64(i) {
 			t.Fail()
 		}
+	}
+}
+
+func TestNegative1(t *testing.T) {
+	pq := gpq.NewPriorityQueue[Expirable[string]](func(i, j Expirable[string]) bool {
+		return i.ExpirationTime > j.ExpirationTime
+	})
+
+	e := pq.Peek()
+
+	if e != nil {
+		t.Fail()
+	}
+
+	e = pq.Pop()
+	if e != nil {
+		t.Fail()
 	}
 }
